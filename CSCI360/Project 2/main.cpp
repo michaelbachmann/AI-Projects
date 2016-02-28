@@ -96,7 +96,7 @@ int main(int argc, char **argv)
                 }
             }
         }
-        
+
         // call the simulator to move your robot and count the steps
         
         sim1->moveRobot();
