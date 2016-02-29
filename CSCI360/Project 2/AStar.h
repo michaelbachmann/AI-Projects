@@ -29,7 +29,7 @@ public:
 	void searchHelper(State* init, PriorityQueue* frontier);
 
 	// Main search function returns a queue of Point 2d with the best path
-	std::queue<Point2D*>* getPath(Point2D initial_state, std::vector<Point2D> new_obstacles, int gValue);
+	std::queue<Point2D*>* getPath(Point2D initial_state, std::vector<Point2D> new_obstacles);
 
 	// Recursively follows the closesd list from the goal and adds the path to the queue
 	std::queue<Point2D*>* generatePath();

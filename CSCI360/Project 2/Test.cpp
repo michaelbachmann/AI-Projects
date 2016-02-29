@@ -31,42 +31,42 @@ void Test::test_a_star_init() {
 }
 
 
-void Test::test_a_star_adjacent(){
-    // // Middle
-    std::list<State*>* adjacent_list = a_star->getAdjacent(new State(*(new Point2D(20,25)), *goalState, 1, NULL));
-    // Top
-    std::list<State*>* adjacent_list2 = a_star->getAdjacent(new State(*(new Point2D(20,50)), *goalState, 1, NULL));
-    // Left
-    std::list<State*>* adjacent_list3 = a_star->getAdjacent(new State(*(new Point2D(50,25)), *goalState, 1, NULL));
-    // Right
-    std::list<State*>* adjacent_list4 = a_star->getAdjacent(new State(*(new Point2D(0,25)), *goalState, 1, NULL));
-    // Bottom
-    std::list<State*>* adjacent_list5 = a_star->getAdjacent(new State(*(new Point2D(20,0)), *goalState, 1, NULL));
-    // Top-Left
-    std::list<State*>* adjacent_list6 = a_star->getAdjacent(new State(*(new Point2D(50,50)), *goalState, 1, NULL));
-    // Top-Right
-    std::list<State*>* adjacent_list7 = a_star->getAdjacent(new State(*(new Point2D(0,50)), *goalState, 1, NULL));
-    // Bot-Right
-    std::list<State*>* adjacent_list8 = a_star->getAdjacent(new State(*(new Point2D(0,0)), *goalState, 1, NULL));
-    // Bot-Left
-    std::list<State*>* adjacent_list9 = a_star->getAdjacent(new State(*(new Point2D(50,0)), *goalState, 1, NULL));
+// void Test::test_a_star_adjacent(){
+//     // // Middle
+//     std::list<State*>* adjacent_list = a_star->getAdjacent(new State(*(new Point2D(20,25)), *goalState, 1, NULL));
+//     // Top
+//     std::list<State*>* adjacent_list2 = a_star->getAdjacent(new State(*(new Point2D(20,50)), *goalState, 1, NULL));
+//     // Left
+//     std::list<State*>* adjacent_list3 = a_star->getAdjacent(new State(*(new Point2D(50,25)), *goalState, 1, NULL));
+//     // Right
+//     std::list<State*>* adjacent_list4 = a_star->getAdjacent(new State(*(new Point2D(0,25)), *goalState, 1, NULL));
+//     // Bottom
+//     std::list<State*>* adjacent_list5 = a_star->getAdjacent(new State(*(new Point2D(20,0)), *goalState, 1, NULL));
+//     // Top-Left
+//     std::list<State*>* adjacent_list6 = a_star->getAdjacent(new State(*(new Point2D(50,50)), *goalState, 1, NULL));
+//     // Top-Right
+//     std::list<State*>* adjacent_list7 = a_star->getAdjacent(new State(*(new Point2D(0,50)), *goalState, 1, NULL));
+//     // Bot-Right
+//     std::list<State*>* adjacent_list8 = a_star->getAdjacent(new State(*(new Point2D(0,0)), *goalState, 1, NULL));
+//     // Bot-Left
+//     std::list<State*>* adjacent_list9 = a_star->getAdjacent(new State(*(new Point2D(50,0)), *goalState, 1, NULL));
     
-    std::cout << "Should be 8... " << adjacent_list->size() << "\n";
-    std::cout << "Should all be 5... " << adjacent_list2->size() << ", "<< adjacent_list3->size() << ", "<< adjacent_list4->size() << ", "<< adjacent_list5->size() << "\n";
-    std::cout << "Should all be 3... " << adjacent_list6->size() << ", "<< adjacent_list7->size() << ", "<< adjacent_list8->size() << ", "<< adjacent_list9->size() << "\n";
-    // for (auto x : *adjacent_list)
-    //     std::cout << *x;
+//     std::cout << "Should be 8... " << adjacent_list->size() << "\n";
+//     std::cout << "Should all be 5... " << adjacent_list2->size() << ", "<< adjacent_list3->size() << ", "<< adjacent_list4->size() << ", "<< adjacent_list5->size() << "\n";
+//     std::cout << "Should all be 3... " << adjacent_list6->size() << ", "<< adjacent_list7->size() << ", "<< adjacent_list8->size() << ", "<< adjacent_list9->size() << "\n";
+//     // for (auto x : *adjacent_list)
+//     //     std::cout << *x;
 
-    delete adjacent_list;
-    delete adjacent_list2;
-    delete adjacent_list3;
-    delete adjacent_list4;
-    delete adjacent_list5;
-    delete adjacent_list6;
-    delete adjacent_list7;
-    delete adjacent_list8;
-    delete adjacent_list9;
-}
+//     delete adjacent_list;
+//     delete adjacent_list2;
+//     delete adjacent_list3;
+//     delete adjacent_list4;
+//     delete adjacent_list5;
+//     delete adjacent_list6;
+//     delete adjacent_list7;
+//     delete adjacent_list8;
+//     delete adjacent_list9;
+// }
 
 
 
@@ -74,52 +74,52 @@ void Test::test_a_star_adjacent(){
 ///////////////////////////////////////////
 // Test PriorityQueue Class  //////////////
 ///////////////////////////////////////////
-void Test::test_push() {
-    for (int i = 0; i < 10; ++i) {
-        State* state = new State(*(new Point2D(i,i+1)), *goalState, 1, NULL);
-        min_heap->push(state);
-    }
-    min_heap->printQueue();
-}
-void Test::test_pop() {
-    for (int i = 0; i < 4; ++i) {
-        curState = min_heap->pop();
-        std::cout << "... Popped: " << *curState;
-    }
-    std::cout << "---------------------------\n";
-    std::cout << "Printing rest of queue\n";
-    std::cout << "---------------------------\n\n";
-    min_heap->printQueue();
-}
-void Test::test_update() {
-    min_heap->printQueue();
-    std::cout << "-------- Test: Update on (4,5) --------\n";
-    State* state = new State(*(new Point2D(4,5)), *goalState, 4, NULL);
-    min_heap->update(*state, *goalState);
-    min_heap->printQueue();
-    delete state;
+// void Test::test_push() {
+//     for (int i = 0; i < 10; ++i) {
+//         State* state = new State(*(new Point2D(i,i+1)), *goalState, 1, NULL);
+//         min_heap->push(state);
+//     }
+//     min_heap->printQueue();
+// }
+// void Test::test_pop() {
+//     for (int i = 0; i < 4; ++i) {
+//         curState = min_heap->pop();
+//         std::cout << "... Popped: " << *curState;
+//     }
+//     std::cout << "---------------------------\n";
+//     std::cout << "Printing rest of queue\n";
+//     std::cout << "---------------------------\n\n";
+//     min_heap->printQueue();
+// }
+// void Test::test_update() {
+//     min_heap->printQueue();
+//     std::cout << "-------- Test: Update on (4,5) --------\n";
+//     State* state = new State(*(new Point2D(4,5)), *goalState, 4, NULL);
+//     min_heap->update(*state, *goalState);
+//     min_heap->printQueue();
+//     delete state;
 
-}
-void Test::test_contains() {
-    State* state = new State(*(new Point2D(2,3)), *goalState, 4, NULL);
-    std::cout << "\n---------------------------\n";
-    std::cout << "Check to see if queue contains (2,3) w/ diff g\n";
-    if (min_heap->contains(*state))
-        std::cout << "YEAH BUDDY!!!! we got it!";
-    else std::cout << "nooooooooooooooooo\n";
-    std::cout << "\n---------------------------\n\n";
+// }
+// void Test::test_contains() {
+//     State* state = new State(*(new Point2D(2,3)), *goalState, 4, NULL);
+//     std::cout << "\n---------------------------\n";
+//     std::cout << "Check to see if queue contains (2,3) w/ diff g\n";
+//     if (min_heap->contains(*state))
+//         std::cout << "YEAH BUDDY!!!! we got it!";
+//     else std::cout << "nooooooooooooooooo\n";
+//     std::cout << "\n---------------------------\n\n";
 
-    State* state_two = new State(*(new Point2D(19,3)), *goalState, 4, NULL);
-    std::cout << "\n---------------------------\n";
-    std::cout << "Check to see if queue doesn't contain (19,3) w/ diff g\n";
-    if (min_heap->contains(*state_two))
-        std::cout << "Uh oh";
-    else std::cout << "Not Found !!! Holla!";
-    std::cout << "\n---------------------------\n\n";
+//     State* state_two = new State(*(new Point2D(19,3)), *goalState, 4, NULL);
+//     std::cout << "\n---------------------------\n";
+//     std::cout << "Check to see if queue doesn't contain (19,3) w/ diff g\n";
+//     if (min_heap->contains(*state_two))
+//         std::cout << "Uh oh";
+//     else std::cout << "Not Found !!! Holla!";
+//     std::cout << "\n---------------------------\n\n";
 
-    delete state;
-    delete state_two;
-}
+//     delete state;
+//     delete state_two;
+// }
 
 ///////////////////////////////////////////
 // Test State Class Functions /////////////

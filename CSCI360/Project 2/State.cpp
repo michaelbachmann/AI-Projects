@@ -12,7 +12,7 @@ State::State(const Point2D& location){
 	parent = NULL;
 }
 
-State::State(const Point2D& location, const Point2D& goal, int gValue, State* parent) {
+State::State(const Point2D& location, const Point2D& goal, double gValue, State* parent) {
 	x = location.x;
 	y = location.y;
 	this->gValue = ++gValue;
@@ -21,13 +21,13 @@ State::State(const Point2D& location, const Point2D& goal, int gValue, State* pa
 	calculateF();
 }
 
-void State::updateState(int gValue, const Point2D& goal) {
+void State::updateState(double gValue, const Point2D& goal) {
 	this->gValue = ++gValue;
 	calculateH(goal);
 	calculateF();
 }
 
-State* State::getParent() {
+State* State::getParent() const{
 	return parent;
 }
 void State::setParent(State* parent) {
@@ -41,7 +41,10 @@ State::~State(){
 std::ostream& operator<<(std::ostream& os, const State& state)
 {
     os << "State: (" << state.getX() <<  ", " << state.getY() << ") ... { G = ";
-    os << state.getG() << ", H = " << state.getH() << ", F = " << state.getF() << " }\n";
+    os << state.getG() << ", H = " << state.getH() << ", F = " << state.getF() << " } ... Parent = (";
+    if (state.getParent())
+    	os << state.getParent()->getX() << " , "<<state.getParent()->getY();
+    os << " )\n";
     return os;
 }
 
@@ -62,11 +65,11 @@ Point2D* State::convertTo2D() {
 
 void State::calculateF() { fValue = gValue + hValue; }
 
-const float State::getF() const { return fValue; }
+const double State::getF() const { return fValue; }
 
-const int State::getG() const { return gValue; }
+const double State::getG() const { return gValue; }
 
-const float State::getH() const { return hValue; }
+const double State::getH() const { return hValue; }
 
 const float State::getX() const { return x; }
 

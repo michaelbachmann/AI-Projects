@@ -9,27 +9,29 @@
 class State {
 private:
 	State* parent;
-	float x, y, hValue, fValue;
-	int gValue;
+	float x, y;
+	double hValue, fValue;
+	double gValue;
 
 public:
 	State();
 	State(const Point2D& location);
-	State(const Point2D& location, const Point2D& goal, int gValue, State* parent);
+
+	State(const Point2D& location, const Point2D& goal, double gValue, State* parent);
 	// State(const Point2D& location, const Point2D& goal, int gValue);
 	~State();
 
 	void calculateF();
 	void calculateH(const Point2D& goal);
 	friend std::ostream& operator<<(std::ostream& os, const State& state);
-	const int getG() const;
+	const double getG() const;
 	const float getX() const;
 	const float getY() const;
-	const float getH() const;
-	const float getF() const;
-	void updateState(int gValue,const Point2D& goal);
+	const double getH() const;
+	const double getF() const;
+	void updateState(double gValue,const Point2D& goal);
 	bool equalsPoint(const Point2D& point);
-	State* getParent();
+	State* getParent() const;
 	void setParent(State* parent);
 	Point2D* convertTo2D();
 
@@ -40,21 +42,12 @@ public:
 struct state_set_comparator {
 	bool operator() (const State& lhs, const State& rhs) const {
 		return (std::make_pair(lhs.getX(), lhs.getY()) < std::make_pair(rhs.getX(), rhs.getY()));
-		// if (lhs.getX() < rhs.getX() && (lhs.getY() < rhs.getY()))
-		// 	return true;
-		// else return false;
 	}
 };
 
 struct state_set_comparator_p {
 	bool operator() (const State *lhs, const State *rhs) const {
-		// return (std::make_pair(lhs->getX(),lhs->getY()) < std::make_pair(rhs->getX(),rhs->getY()));
 		return (std::make_pair(lhs->getX(), lhs->getY()) < std::make_pair(rhs->getX(), rhs->getY()));
-
-		// return (std::make_pair(lhs->getX(), rhs->getX()) < std::make_pair(lhs->getY() < rhs->getY()));
-		// if (lhs->getX() < rhs->getX() && (lhs->getY() < rhs->getY()))
-		// 	return true;
-		// else return false;
 	}
 };
 
@@ -68,8 +61,12 @@ struct state_priority_comparator {
 
 struct state_priority_comparator_p {
 	bool operator()(const State* lhs, const State* rhs) {
-		if (lhs->getF() == rhs->getF())
-			return lhs->getG() > rhs->getG();
+		if (lhs->getF() == rhs->getF()) {
+			if (lhs->getG() > rhs->getG())
+				return lhs->getG() > rhs->getG();
+			return true;
+		}
+
 		return lhs->getF() < rhs->getF(); 
 	}
 };

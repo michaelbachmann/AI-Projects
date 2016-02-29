@@ -18,22 +18,21 @@ SRC_DIR = src
 CXX = g++
 CPPFLAGS = -Wall -g -std=c++11 -fdiagnostics-color
 VALGRIND = valgrind --tool=memcheck --leak-check=yes
-# TARGETS = $(BIN_DIR)/llistint.o $(BIN_DIR)/stackint.o $(BIN_DIR)/ProgramState.o $(BIN_DIR)/LetStatement.o $(BIN_DIR)/EndStatement.o $(BIN_DIR)/PrintStatement.o $(BIN_DIR)/PrintAllStatement.o $(BIN_DIR)/AddStatement.o $(BIN_DIR)/SubStatement.o $(BIN_DIR)/MultStatement.o $(BIN_DIR)/DivStatement.o $(BIN_DIR)/GotoStatement.o $(BIN_DIR)/IfStatement.o $(BIN_DIR)/GoSubStatement.o $(BIN_DIR)/ReturnStatement.o
-TARGETS = $(BIN_DIR)/Test.o $(BIN_DIR)/State.o $(BIN_DIR)/AStar.o $(BIN_DIR)/PriorityQueue.o
+TARGETS = $(BIN_DIR)/Test.o $(BIN_DIR)/Project2.o $(BIN_DIR)/State.o $(BIN_DIR)/AStar.o $(BIN_DIR)/PriorityQueue.o $(BIN_DIR)/Robot.o
 #GTEST_LL = -I /usr/local/opt/gtest/include/ -l gtest -l gtest_main -pthread
 
 all: $(TARGETS)
 
 test: test
 
-# sim: sim
+sim: sim
 
 # Compiles any .o file by using the .cpp and .h file of the same name. 
 $(BIN_DIR)/%.o: %.cpp %.h $(BIN_DIR)/.dirstamp 
 	$(CC) $(CPPFLAGS) -c $< -o $@
 
-# sim: main.cpp $(TARGETS)
-# 	$(CXX) $(CPPFLAGS) $^ -o $@ -lm
+sim: main.cpp $(TARGETS)
+	$(CXX) $(CPPFLAGS) $^ -o $@ -lm
 
 test: main_test.cpp $(TARGETS)
 	$(CXX) $(CPPFLAGS) $^ -o $@ -lm

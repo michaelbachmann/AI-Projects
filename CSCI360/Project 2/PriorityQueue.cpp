@@ -36,8 +36,12 @@ bool PriorityQueue::empty() const {
 }
 
 void PriorityQueue::printQueue() {
+	std::cout << "Printing Frontier ... \n";
+	std::cout << "----------------------\n";
 	for (auto x : min_heap)
 		std::cout << *x;
+	std::cout << "----------------------\n";
+
 }
 
 // Call find and store, update value, remove from set, add new value

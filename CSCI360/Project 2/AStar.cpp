@@ -45,24 +45,87 @@ std::list<State*>* AStar::getAdjacent (State* current) {
 	for (int i = x_right; i <= x_left; ++i) {
 		for (int j = y_bot; j <= y_top; ++j) {
 			if (!((i == x) && (j == y)))
-				list_to_return->push_back(new State(*(new Point2D(i,j)), goal_2d, current->getG() + 1, current));
+				list_to_return->push_back(new State(*(new Point2D(i,j)), goal_2d, current->getG(), current));
 		}
 	}
 	return list_to_return;
 }
 
 // This is whats called by the robot to get its best path
-std::queue<Point2D*>* AStar::getPath(Point2D initial_state, std::vector<Point2D> new_obstacles, int gValue) {
+std::queue<Point2D*>* AStar::getPath(Point2D initial_state, std::vector<Point2D> new_obstacles) {
 	closed_list.clear();
 	for (std::vector<Point2D>::iterator i = new_obstacles.begin(); i != new_obstacles.end(); ++i)
 		obstacle_set.insert(new State(*i));
 	PriorityQueue* frontier = new PriorityQueue();
 	State* init = new State(initial_state, goal_2d, 0, NULL);
-	// searchHelper(init, frontier);
-	return (new std::queue<Point2D*>);
-	// return generatePath();
+	frontier->push(init);
+	frontier->printQueue();
+	searchHelper(init, frontier);
+
+	frontier->printQueue();
+	std::cout << "Printing Closed List ...\n";
+	std::cout << "------------------------\n";
+	for (auto x : closed_list)
+		std::cout << *x;
+	std::cout << "------------------------\n";
+
+	// return (new std::queue<Point2D*>);
+	return generatePath();
 }
 
+std::queue<Point2D*>* AStar::generatePath() {
+	std::cout << "\n\n\n... Path ... \n";
+	std::cout << "------------------------\n";
+	std::cout << "Goal State = " << *goal_state << std::endl;
+	std::cout << "------------------------\n";
+	std::queue<Point2D*>* best_path = new std::queue<Point2D*>();
+	best_path->push(goal_state->convertTo2D());
+	State* seeker = goal_state->getParent();
+
+	while (seeker) {
+		std::cout << *seeker << "\n";
+		best_path->push(seeker->convertTo2D());
+		seeker = seeker->getParent();
+	}
+	return best_path;
+}
+
+void AStar::searchHelper(State* init, PriorityQueue* frontier) {
+	State* consider = frontier->pop();
+	closed_list.insert(consider);
+	if (*consider == *goal_state) {
+		goal_state->setParent(init);
+		return;
+	}
+	// Get Neighbors
+	std::list<State*>* adjacent_list = getAdjacent(consider);
+	// std::cout << "Printing Adjacent List ...\n";
+	// std::cout << "--------------------------\n";
+	// for (auto x : *adjacent_list)
+	// 	std::cout << *x;
+	// std::cout << "--------------------------\n";
+
+	// For all neighbors
+	for (std::list<State*>::iterator neighbor = adjacent_list->begin(); neighbor != adjacent_list->end(); ++neighbor) {
+		// If its not in the closed list or obstacle list lets check it
+		// std::cout << "obstacle_set count neighbor... " << obstacle_set.count(*neighbor) << std::endl;
+		if ((obstacle_set.count(*neighbor) == 0) && (closed_list.count(*neighbor) == 0)) {
+			// See if its in the frontier
+			if (frontier->contains(**neighbor)) {
+							// std::cout << "Neigh = " << **neighbor;
+				// if it is see if we found a better path
+				if (  frontier->find(*(*neighbor))->getG() > (consider->getG())+1) {
+					(*neighbor)->setParent(consider);
+					frontier->update(*(*neighbor), goal_2d);
+				}
+			} else {
+					std::cout << "Neigh = " << **neighbor;
+					frontier->push(*neighbor);
+			}
+		}
+	}
+	searchHelper(consider,frontier);
+}
 void AStar::testHelper(bool print_init_state, bool print_c_list, bool print_obstacle_set) {
 	if (print_init_state) {
 		std::cout << "\n--------- Printing Init State ---------\n";
@@ -88,47 +151,6 @@ void AStar::testHelper(bool print_init_state, bool print_c_list, bool print_obst
 		std::cout << "---------------------------------------\n";
 	}
 }
-
-std::queue<Point2D*>* AStar::generatePath() {
-	std::queue<Point2D*>* best_path = new std::queue<Point2D*>();
-	best_path->push(goal_state->convertTo2D());
-	State* seeker = goal_state->getParent();
-	while (seeker->getParent()) {
-		best_path->push(seeker->convertTo2D());
-		seeker = seeker->getParent();
-	}
-	return best_path;
-}
-
-void AStar::searchHelper(State* init, PriorityQueue* frontier) {
-	State* consider = frontier->pop();
-	closed_list.insert(consider);
-	if (*consider == *goal_state) {
-		goal_state->setParent(init);
-		return;
-	}
-	// Get Neighbors
-	std::list<State*>* adjacent_list = getAdjacent(consider);
-	// For all neighbors
-	for (std::list<State*>::iterator neighbor = adjacent_list->begin(); neighbor != adjacent_list->end(); ++neighbor) {
-		// If its not in the closed list or obstacle list lets check it
-		if ((obstacle_set.find(*neighbor) != obstacle_set.end()) && (closed_list.find(*neighbor) != closed_list.end())) {
-			// See if its in the frontier
-			if (frontier->contains(*(*neighbor))) {
-				// if it is see if we found a better path
-				if (  frontier->find(*(*neighbor))->getG() > (consider->getG())+1) {
-					(*neighbor)->setParent(consider);
-					frontier->update(*(*neighbor), goal_2d);
-				}
-			} else {
-					(*neighbor)->setParent(consider);
-					frontier->push(*neighbor);
-			}
-		}
-	}
-	searchHelper(consider,frontier);
-}
-
 
 // // Main search function returns a queue of Point 2d with the best path
 // std::queue<Point2D*>* AStar::search(State& initial_state, std::vector<Point2D> new_obstacles) {

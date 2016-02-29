@@ -8,18 +8,30 @@ Project2::Project2(Simulator* sim1) {
 
 	// Initialize known Obstacles
 	std::vector<Point2D> knownObstacles = sim1->getKnownObstacleLocations();
-	// for (std::vector<Point2D>::iterator i = knownObstacles.begin(); i != knownObstacles.end(); ++i)
-	// 	obstacle_set.insert(*i);
+	for (std::vector<Point2D>::iterator i = knownObstacles.begin(); i != knownObstacles.end(); ++i)
+		obstacle_set.insert(*i);
 	// Run A* for the first time
     aStar = new AStar(knownObstacles, sim1->getTarget(), sim1->SX, sim1->SY);
+    aStar->testHelper(true,true,true);
+    first_run = true;
+
+    // std::vector<Point2D> newObstacles = r1->getLocalObstacleLocations();
+    // if (!newObstacles.empty()){ // add obstacles to environment knowledge and rerun A*
+    //     for (std::vector<Point2D>::iterator i = newObstacles.begin(); i != newObstacles.end(); ++i)
+    //         obstacle_set.insert(*i);
+    //     // run astar again
+    //     clearQueue(currentBestPath);
+    //     currentBestPath = astar->getPath(currentPosition, newObstacles);
+    // }
 	// aStar = new AStar(knownObstacles);  // pass in the initial obstacle set
 }
 
-void Project2::clearQueue( std::queue<Point2D> &q )
-{
-   std::queue<Point2D> empty;
-   std::swap( q, empty );
-}
+
+// void Project2::clearQueue( std::queue<Point2D> &q )
+// {
+//    std::queue<Point2D> empty;
+//    std::swap( q, empty );
+// }
 
 /**
  * @brief get optimal action
@@ -28,14 +40,28 @@ void Project2::clearQueue( std::queue<Point2D> &q )
  * @return optimal action
  */
 RobotAction Project2::getOptimalAction(Simulator* sim1, Robot* r1) {
-	// std::vector<Point2D> newObstacles = r1->getLocalObstacleLocations();
-	// if (!newObstacles.empty()){ // add obstacles to environment knowledge and rerun A*
-	// 	for (std::vector<Point2D>::iterator i = newObstacles.begin(); i != newObstacles.end(); ++i)
-	// 		obstacleSet.insert(*i);
- //        // run astar again
- //        clearQueue(currentBestPath);
- //        // currentBestPath = astar->getPath(obstacleSet, currentPosition, goalState);
-	// }
+	std::vector<Point2D> newObstacles = r1->getLocalObstacleLocations();
+	if (!newObstacles.empty() || first_run){ // add obstacles to environment knowledge and rerun A*
+        if (first_run) // ensure AStar run on first run through
+            first_run = false;
+		for (std::vector<Point2D>::iterator i = newObstacles.begin(); i != newObstacles.end(); ++i)
+			obstacle_set.insert(*i);
+        // run astar again
+        delete currentBestPath;
+        // clearQueue(currentBestPath);
+        currentBestPath = aStar->getPath(r1->getPosition(), newObstacles);
+        std::cout << "----------------\n";
+        std::cout << "Best Path is ...\n";
+        std::cout << "----------------\n";
+        Point2D* cur;
+        while (!currentBestPath->empty()) {
+            cur = currentBestPath->front();
+            std::cout << "( " << currentBestPath->front()->x;
+             // < " , " << currentBestPath->front()->y << " ) ... ";
+            currentBestPath->pop();
+        }
+        std::cout << "----------------\n";
+	}
 
 	//  Since there are no new obstacles continue along our path
 	// currentTop = currentBestPath.front();
