@@ -17,9 +17,6 @@
 struct point_set_compare {
     bool operator() (const Point2D& lhs, const Point2D& rhs) const {
         return std::make_pair(lhs.x, lhs.y) < std::make_pair(rhs.x, rhs.y);
-        // if (lhs.x != rhs.x && lhs.y != rhs.y)
-        //     return false;
-        // return true;
     }
 };
 
@@ -36,7 +33,6 @@ public:
      * @brief default constructor
      */
     Project2(Simulator* sim1);
-    // void clearQueue(std::queue<Point2D> &q);
     /**
      * @brief get optimal action
      * @param sim1 simulator pointer

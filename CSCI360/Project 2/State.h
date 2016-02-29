@@ -18,7 +18,6 @@ public:
 	State(const Point2D& location);
 
 	State(const Point2D& location, const Point2D& goal, double gValue, State* parent);
-	// State(const Point2D& location, const Point2D& goal, int gValue);
 	~State();
 
 	void calculateF();
@@ -36,7 +35,6 @@ public:
 	Point2D* convertTo2D();
 
 	bool operator==(const State &other) const;
-	// bool operator<(State other) const;
 };
 
 struct state_set_comparator {
@@ -66,7 +64,6 @@ struct state_priority_comparator_p {
 				return lhs->getG() > rhs->getG();
 			return true;
 		}
-
 		return lhs->getF() < rhs->getF(); 
 	}
 };

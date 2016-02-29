@@ -80,9 +80,3 @@ bool State::operator==(const State &other) const {
 		return true;
 	return false;
 }
-
-// bool State::operator<(State other) const {
-// 	if (fValue == other.getF())
-// 		return gValue < other.getG();
-// 	return fValue > other.getF(); 
-// }
