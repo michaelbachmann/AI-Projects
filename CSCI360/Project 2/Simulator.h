@@ -58,10 +58,10 @@ public:
         showHiddenObstacles = true;
     }
 
-	int getHeight() { return SX; }
-	int getWidth() { return SY; }
+    int getHeight() { return SX; }
+    int getWidth() { return SY; }
 
-	/**
+    /**
      * @brief get the hidden obstacle locations at a certain point
      * @return hidden obstacle locations
      */
@@ -80,16 +80,16 @@ public:
         pointsToCheck.push_back(p4); pointsToCheck.push_back(p5); pointsToCheck.push_back(p6);
         pointsToCheck.push_back(p7); pointsToCheck.push_back(p8);
         
-		std::vector<Point2D> obs;
+        std::vector<Point2D> obs;
         for (int i=0; i<pointsToCheck.size(); i++) {
             if (pointsToCheck[i].x >= 0 && pointsToCheck[i].y >= 0 &&
                 pointsToCheck[i].x < this->SX && pointsToCheck[i].y < this->SY &&
                 (AREA[(int)pointsToCheck[i].x][(int)pointsToCheck[i].y] == HIDDEN_OBSTACLE ||
-				(!hiddenOnly && AREA[(int)pointsToCheck[i].x][(int)pointsToCheck[i].y] == OBSTACLE))) {
+                (!hiddenOnly && AREA[(int)pointsToCheck[i].x][(int)pointsToCheck[i].y] == OBSTACLE))) {
                 obs.push_back(Point2D(pointsToCheck[i].x, pointsToCheck[i].y));
 
 #ifdef MAKE_HIDDEN_OBSTACLES_KNOWN
-				AREA[(int)pointsToCheck[i].x][(int)pointsToCheck[i].y] = OBSTACLE;
+                AREA[(int)pointsToCheck[i].x][(int)pointsToCheck[i].y] = OBSTACLE;
 #endif
             }
         }
@@ -111,43 +111,32 @@ public:
      * @param num number of obstacles
      */
     void createRandomObstacles(int num) {
-        obstacleLocations.push_back(Point2D(1,4));
-        obstacleLocations.push_back(Point2D(1,28));
-        obstacleLocations.push_back(Point2D(6,8));
-        obstacleLocations.push_back(Point2D(8,23));
-        obstacleLocations.push_back(Point2D(8,33));
-
-        // for (int i=0; i<num; i++) {
-        //     int ox = rand()%SX;
-        //     int oy = rand()%SY;
-        //     while ((ox == TX && oy == TY) || (ox == this->getRobot()->X && oy == this->getRobot()->Y)) {
-        //         ox = rand()%SX;
-        //         oy = rand()%SY;
-        //     }
-        //     AREA[ox][oy] = OBSTACLE;
-        //     obstacleLocations.push_back(Point2D(ox, oy));
-        // }
+        for (int i=0; i<num; i++) {
+            int ox = rand()%SX;
+            int oy = rand()%SY;
+            while ((ox == TX && oy == TY) || (ox == this->getRobot()->X && oy == this->getRobot()->Y)) {
+                ox = rand()%SX;
+                oy = rand()%SY;
+            }
+            AREA[ox][oy] = OBSTACLE;
+            obstacleLocations.push_back(Point2D(ox, oy));
+        }
     }
     /**
      * @brief create random obstacles in the environment
      * @param num number of obstacles
      */
     void createRandomHiddenObstacles(int num) {
-        hiddenObstacleLocations.push_back(Point2D(1, 37));
-        hiddenObstacleLocations.push_back(Point2D(4, 18));
-        hiddenObstacleLocations.push_back(Point2D(5, 17));
-        hiddenObstacleLocations.push_back(Point2D(6, 2));
-        hiddenObstacleLocations.push_back(Point2D(8, 8));
-        // for (int i=0; i<num; i++) {
-        //     int ox = rand()%SX;
-        //     int oy = rand()%SY;
-        //     while ((ox == TX && oy == TY) || (ox == this->getRobot()->X && oy == this->getRobot()->Y)) {
-        //         ox = rand()%SX;
-        //         oy = rand()%SY;
-        //     }
-        //     AREA[ox][oy] = HIDDEN_OBSTACLE;
-        //     hiddenObstacleLocations.push_back(Point2D(ox, oy));
-        // }
+        for (int i=0; i<num; i++) {
+            int ox = rand()%SX;
+            int oy = rand()%SY;
+            while ((ox == TX && oy == TY) || (ox == this->getRobot()->X && oy == this->getRobot()->Y)) {
+                ox = rand()%SX;
+                oy = rand()%SY;
+            }
+            AREA[ox][oy] = HIDDEN_OBSTACLE;
+            hiddenObstacleLocations.push_back(Point2D(ox, oy));
+        }
     }
     /**
      * @brief clear the environment
@@ -163,11 +152,6 @@ public:
      * @brief display the environment on the terminal
      */
     void display() {
-        // for (int i = 0; i < getWidth(); ++i)
-        // {
-        //     std::cout << i;
-        // }
-        // std::cout << std::endl<< std::endl;
         //printf("\033c"); // clear the terminal screen
 #if defined(_WIN32) || defined(_WIN64)
         system("cls");
@@ -186,10 +170,10 @@ public:
                     printf("#");
                 else if (AREA[x][y] == HIDDEN_OBSTACLE)
                 {
-					if (showHiddenObstacles)
-						printf("H");
-					else
-						printf("#");
+                    if (showHiddenObstacles)
+                        printf("H");
+                    else
+                        printf("#");
                 }
                 else printf("O");
             }

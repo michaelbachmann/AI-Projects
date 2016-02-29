@@ -44,8 +44,8 @@ grind_llisttest: test
 	
 .PHONY: clean
 clean:
-	rm test
-	rm -rf test.dSYM
+	rm sim
+	rm -rf sim.dSYM
 	rm -rf $(BIN_DIR) main
 
 $(BIN_DIR)/.dirstamp:
