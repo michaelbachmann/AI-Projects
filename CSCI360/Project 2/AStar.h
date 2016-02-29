@@ -4,6 +4,7 @@
 #include "State.h"
 #include <math.h>
 #include <queue>
+#include <stack>
 #include <set>
 #include <list>
 #include "PriorityQueue.h"
@@ -29,10 +30,10 @@ public:
 	void searchHelper(State* init, PriorityQueue* frontier);
 
 	// Main search function returns a queue of Point 2d with the best path
-	std::queue<Point2D*>* getPath(Point2D initial_state, std::vector<Point2D> new_obstacles);
+	std::stack<Point2D*>* getPath(Point2D initial_state, std::vector<Point2D> new_obstacles);
 
 	// Recursively follows the closesd list from the goal and adds the path to the queue
-	std::queue<Point2D*>* generatePath();
+	std::stack<Point2D*>* generatePath();
 
 	void testHelper(bool print_init_state, bool print_c_list, bool print_obstacle_set);
 

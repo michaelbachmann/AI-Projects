@@ -12,8 +12,9 @@ Project2::Project2(Simulator* sim1) {
 		obstacle_set.insert(*i);
 	// Run A* for the first time
     aStar = new AStar(knownObstacles, sim1->getTarget(), sim1->SX, sim1->SY);
-    aStar->testHelper(true,true,true);
+    // aStar->testHelper(true,true,true);
     first_run = true;
+
 
     // std::vector<Point2D> newObstacles = r1->getLocalObstacleLocations();
     // if (!newObstacles.empty()){ // add obstacles to environment knowledge and rerun A*
@@ -50,28 +51,28 @@ RobotAction Project2::getOptimalAction(Simulator* sim1, Robot* r1) {
         delete currentBestPath;
         // clearQueue(currentBestPath);
         currentBestPath = aStar->getPath(r1->getPosition(), newObstacles);
-        std::cout << "----------------\n";
-        std::cout << "Best Path is ...\n";
-        std::cout << "----------------\n";
-        Point2D* cur;
-        while (!currentBestPath->empty()) {
-            cur = currentBestPath->front();
-            std::cout << "( " << currentBestPath->front()->x;
-             // < " , " << currentBestPath->front()->y << " ) ... ";
-            currentBestPath->pop();
-        }
-        std::cout << "----------------\n";
+        // std::cout << "----------------\n";
+        // std::cout << "Best Path is ...\n";
+        // std::cout << "----------------\n";
+        // std::cout << currentBestPath->size() << std::endl;
+        // Point2D* cur;
+        // while (!currentBestPath->empty()) {
+        //     cur = currentBestPath->top();
+        //     std::cout << "( " << cur->x << " , " << cur->y << " )\n";
+        //     currentBestPath->pop();
+        // }
+        // std::cout << "----------------\n";
 	}
 
 	//  Since there are no new obstacles continue along our path
-	// currentTop = currentBestPath.front();
-	// currentBestPath.pop();
-	// return (convertToAction(r1->getPosition(), currentTop));
+	currentTop = *currentBestPath->top();
+	currentBestPath->pop();
+	return (convertToAction(r1->getPosition(), currentTop));
 
 
 	// Here, you should find the next step of the robot.
 	// The robot should always follow a shortest path (wrt the known and sensed obstacles) to the goal.
-    return (RobotAction)(rand()%8);
+    // return (RobotAction)(rand()%8);
 }
 
 Project2::~Project2(){

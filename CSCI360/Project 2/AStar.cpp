@@ -52,38 +52,38 @@ std::list<State*>* AStar::getAdjacent (State* current) {
 }
 
 // This is whats called by the robot to get its best path
-std::queue<Point2D*>* AStar::getPath(Point2D initial_state, std::vector<Point2D> new_obstacles) {
+std::stack<Point2D*>* AStar::getPath(Point2D initial_state, std::vector<Point2D> new_obstacles) {
 	closed_list.clear();
 	for (std::vector<Point2D>::iterator i = new_obstacles.begin(); i != new_obstacles.end(); ++i)
 		obstacle_set.insert(new State(*i));
 	PriorityQueue* frontier = new PriorityQueue();
 	State* init = new State(initial_state, goal_2d, 0, NULL);
 	frontier->push(init);
-	frontier->printQueue();
+	// frontier->printQueue();
 	searchHelper(init, frontier);
 
-	frontier->printQueue();
-	std::cout << "Printing Closed List ...\n";
-	std::cout << "------------------------\n";
-	for (auto x : closed_list)
-		std::cout << *x;
-	std::cout << "------------------------\n";
+	// frontier->printQueue();
+	// std::cout << "Printing Closed List ...\n";
+	// std::cout << "------------------------\n";
+	// for (auto x : closed_list)
+	// 	std::cout << *x;
+	// std::cout << "------------------------\n";
 
 	// return (new std::queue<Point2D*>);
 	return generatePath();
 }
 
-std::queue<Point2D*>* AStar::generatePath() {
-	std::cout << "\n\n\n... Path ... \n";
-	std::cout << "------------------------\n";
-	std::cout << "Goal State = " << *goal_state << std::endl;
-	std::cout << "------------------------\n";
-	std::queue<Point2D*>* best_path = new std::queue<Point2D*>();
+std::stack<Point2D*>* AStar::generatePath() {
+	// std::cout << "\n\n\n... Path ... \n";
+	// std::cout << "------------------------\n";
+	// std::cout << "Goal State = " << *goal_state;
+	// std::cout << "------------------------\n";
+	std::stack<Point2D*>* best_path = new std::stack<Point2D*>();
 	best_path->push(goal_state->convertTo2D());
 	State* seeker = goal_state->getParent();
 
-	while (seeker) {
-		std::cout << *seeker << "\n";
+	while (seeker->getParent()) {
+		// std::cout << *seeker << "\n";
 		best_path->push(seeker->convertTo2D());
 		seeker = seeker->getParent();
 	}
@@ -119,7 +119,7 @@ void AStar::searchHelper(State* init, PriorityQueue* frontier) {
 					frontier->update(*(*neighbor), goal_2d);
 				}
 			} else {
-					std::cout << "Neigh = " << **neighbor;
+					// std::cout << "Neigh = " << **neighbor;
 					frontier->push(*neighbor);
 			}
 		}

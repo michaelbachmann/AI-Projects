@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <stack>
 #include <set>
 #include "Robot.h"
 #include "Vector2D.h"
@@ -24,7 +25,7 @@ struct point_set_compare {
 
 class Project2 {
 private:
-    std::queue<Point2D*>* currentBestPath;
+    std::stack<Point2D*>* currentBestPath;
     std::vector<Point2D> obstacleList;
     std::set<Point2D, point_set_compare> obstacle_set;
     Point2D currentTop;
