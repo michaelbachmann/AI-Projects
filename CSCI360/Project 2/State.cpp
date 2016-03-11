@@ -15,14 +15,17 @@ State::State(const Point2D& location){
 State::State(const Point2D& location, const Point2D& goal, double gValue, State* parent) {
 	x = location.x;
 	y = location.y;
-	this->gValue = ++gValue;
+	// this->gValue = ++gValue;
+	this->gValue = gValue;
 	this->parent = parent;
 	calculateH(goal);
 	calculateF();
 }
 
 void State::updateState(double gValue, const Point2D& goal) {
-	this->gValue = ++gValue;
+	// this->gValue = ++gValue;
+	this->gValue = gValue;
+
 	calculateH(goal);
 	calculateF();
 }

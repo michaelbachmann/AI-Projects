@@ -1,0 +1,13 @@
+hidden {0,19} {4,27} {4,31} {6, 12}
+obstacles {0,38}, {2, 23}, {3,20}, {4,2}, {4, 5} {8,29}
+start 0 - 24 (25?)
+goal 0 - 37 (38?)
+
+size 10 x 40
+
+
+probz
+
+parent = obstacle?
+
+wrong path
