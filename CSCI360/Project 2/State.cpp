@@ -58,7 +58,8 @@ bool State::equalsPoint(const Point2D& point) {
 }
 
 void State::calculateH(const Point2D& goal) {
-	hValue = sqrtf( pow( (goal.x - x), 2) + pow( (goal.y - y), 2) );
+	hValue = fabs(goal.x-x) + fabs(goal.y-y);
+	// hValue = sqrtf( pow( (goal.x - x), 2) + pow( (goal.y - y), 2) );
 }
 
 Point2D* State::convertTo2D() {

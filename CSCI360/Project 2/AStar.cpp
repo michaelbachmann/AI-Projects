@@ -6,15 +6,11 @@ AStar::AStar(std::vector<Point2D> &obstacles, Point2D goal_2d, float x_bound, fl
 	this->goal_2d = goal_2d;
 	this->goal_state = new State(goal_2d);;
 	bounds = std::make_pair((int)x_bound, (int)y_bound);
-	// std::cout << "XXXXXX = " << bounds
 	// Add in global obstacles
 	for (std::vector<Point2D>::iterator i = obstacles.begin(); i != obstacles.end(); ++i) {
 		State* current_tate = new State(*i);
 		obstacle_set.insert(current_tate);
 	}
-	// for (auto x : obstacle_set)
-	// 	std::cout << *x;
-	// std::cout << "OBS SET ENDDDDDDD\n\n";
 }
 AStar::~AStar() {
 	for (std::set<State*>::iterator i = obstacle_set.begin(); i != obstacle_set.end(); ++i)
@@ -33,9 +29,6 @@ std::stack<Point2D*>* AStar::getPath(Point2D initial_state, std::vector<Point2D>
 	State* init = new State(initial_state, goal_2d, 0, NULL);
 	frontier->push(init);
 	searchHelper(init, frontier);
-// for (auto x : closed_list)
-// 	std::cout << *x;
-
 	return generatePath();
 }
 
@@ -58,7 +51,6 @@ void AStar::searchHelper(State* init, PriorityQueue* frontier) {
 		goal_state->setParent(init);
 		return;
 	}
-
 	// Get Neighbors
 	std::list<State*>* adjacent_list = getAdjacent(consider);
 	// For all neighbors
@@ -68,8 +60,7 @@ void AStar::searchHelper(State* init, PriorityQueue* frontier) {
 			// See if its in the frontier
 			if (frontier->contains(**neighbor)) {
 				// if it is see if we found a better path
-				// if (  frontier->find(*(*neighbor))->getG() > (consider->getG())+1) {
-				if (  frontier->find(*(*neighbor))->getG() > (consider->getG())+1) {
+				if (  frontier->find(*(*neighbor))->getG() > ((*neighbor)->getG())) {
 					(*neighbor)->setParent(consider);
 					frontier->update(*(*neighbor), goal_2d);
 				}
@@ -77,7 +68,7 @@ void AStar::searchHelper(State* init, PriorityQueue* frontier) {
 				frontier->push(*neighbor);
 		}
 	}
-	// frontier->printQueue();
+
 	searchHelper(consider,frontier);
 }
 
@@ -107,8 +98,10 @@ std::list<State*>* AStar::getAdjacent (State* current) {
 	for (int i = x_right; i <= x_left; ++i) {
 		for (int j = y_bot; j <= y_top; ++j) {
 			if (!((i == x) && (j == y))) {
-				if (i == j)
+				if ((abs(x-i) != 0) && (abs(y-j)!=0) ) {
+					// std::cout << "Diag: ( " << i << ", " << j << " )\n";
 					list_to_return->push_back(new State(*(new Point2D(i,j)), goal_2d, current->getG()+1.5, current));
+				}
 				else
 					list_to_return->push_back(new State(*(new Point2D(i,j)), goal_2d, current->getG()+1, current));
 			}

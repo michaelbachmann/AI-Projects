@@ -50,19 +50,19 @@ int main(int argc, char **argv)
     }
     sim1 = new Simulator(sx,sy);    // create your environment
     printf("Simulator area [%d x %d] is created\n", sx, sy);
-    tx = 3;     // random target x
-    ty = 37;     // random target y
-    // tx = rand()%sx;     // random target x
-    // ty = rand()%sy;     // random target y
+    // tx = 0;     // random target x
+    // ty = 7;     // random target y
+    tx = rand()%sx;     // random target x
+    ty = rand()%sy;     // random target y
     sim1->setTarget(tx, ty);
     printf("Target is set at the location [%d,%d]\n", tx, ty);
     
     id = 1;                     // robot id
     r1 = new Robot(id, sim1);   // create your robot
-    ix = 3;             // random initial x
-    iy = 30;             // random initial y
-    // ix = rand()%sx;             // random initial x
-    // iy = rand()%sy;             // random initial y
+    // ix = 0;             // random initial x
+    // iy = 1;             // random initial y
+    ix = rand()%sx;             // random initial x
+    iy = rand()%sy;             // random initial y
     sim1->setRobot(r1, ix, iy); // place your robot in the environment
     pos = r1->getPosition();    // get the location of your robot
     printf("Robot %d is created at the location [%d,%d]\n\n", r1->getID(), (int)pos.x, (int)pos.y);

@@ -111,80 +111,81 @@ public:
      * @param num number of obstacles
      */
     void createRandomObstacles(int num) {
-        int x_1, x_2, x_3, x_4, x_5, x_6, y_1, y_2, y_3, y_4, y_5, y_6;
-        x_1 = 9;
-        x_2 = 7;
-        x_3 = 6;
-        x_4 = 3;
-        x_5 = 3;
-        x_6 = 1;
+        // int x_1, x_2, x_3, x_4, x_5, x_6, y_1, y_2, y_3, y_4, y_5, y_6;
+        // x_1 = 9;
+        // x_2 = 7;
+        // x_3 = 6;
+        // x_4 = 3;
+        // x_5 = 0;
+        // x_6 = 0;
 
-        y_1 = 35;
-        y_2 = 23;
-        y_3 = 20;
-        y_4 = 32;
-        y_5 = 35;
-        y_6 = 29;
-        obstacleLocations.push_back(Point2D(x_1,y_1));
-        obstacleLocations.push_back(Point2D(x_2,y_2));
-        obstacleLocations.push_back(Point2D(x_3,y_3));
-        obstacleLocations.push_back(Point2D(x_4,y_4));
-        obstacleLocations.push_back(Point2D(x_5,y_5));
-        obstacleLocations.push_back(Point2D(x_6,y_6));
-        AREA[x_1][y_1] = OBSTACLE;
-        AREA[x_2][y_2] = OBSTACLE;
-        AREA[x_3][y_3] = OBSTACLE;
-        AREA[x_4][y_4] = OBSTACLE;
-        AREA[x_5][y_5] = OBSTACLE;
-        AREA[x_6][y_6] = OBSTACLE;
+        // y_1 = 35;
+        // y_2 = 23;
+        // y_3 = 20;
+        // y_4 = 34;
+        // y_5 = 2;
+        // y_6 = 6;
+        // obstacleLocations.push_back(Point2D(x_1,y_1));
+        // obstacleLocations.push_back(Point2D(x_2,y_2));
+        // obstacleLocations.push_back(Point2D(x_3,y_3));
+        // obstacleLocations.push_back(Point2D(x_4,y_4));
+        // obstacleLocations.push_back(Point2D(x_5,y_5));
+        // obstacleLocations.push_back(Point2D(x_6,y_6));
+        // AREA[x_1][y_1] = OBSTACLE;
+        // AREA[x_2][y_2] = OBSTACLE;
+        // AREA[x_3][y_3] = OBSTACLE;
+        // AREA[x_4][y_4] = OBSTACLE;
+        // AREA[x_5][y_5] = OBSTACLE;
+        // AREA[x_6][y_6] = OBSTACLE;
 
-        // for (int i=0; i<num; i++) {
-        //     int ox = rand()%SX;
-        //     int oy = rand()%SY;
-        //     while ((ox == TX && oy == TY) || (ox == this->getRobot()->X && oy == this->getRobot()->Y)) {
-        //         ox = rand()%SX;
-        //         oy = rand()%SY;
-        //     }
-        //     AREA[ox][oy] = OBSTACLE;
-        //     obstacleLocations.push_back(Point2D(ox, oy));
-        // }
+        for (int i=0; i<num; i++) {
+            int ox = rand()%SX;
+            int oy = rand()%SY;
+            while ((ox == TX && oy == TY) || (ox == this->getRobot()->X && oy == this->getRobot()->Y)) {
+                ox = rand()%SX;
+                oy = rand()%SY;
+            }
+            AREA[ox][oy] = OBSTACLE;
+            obstacleLocations.push_back(Point2D(ox, oy));
+        }
     }
     /**
      * @brief create random obstacles in the environment
      * @param num number of obstacles
      */
     void createRandomHiddenObstacles(int num) {
-        int x_1, x_2, x_3, x_4, y_1, y_2, y_3, y_4;
-        x_1 = 9;
-        x_2 = 5;
-        x_3 = 5;
-        x_4 = 3;
+        // int x_1, x_2, x_3, x_4, y_1, y_2, y_3, y_4;
+        // x_1 = 0;
+        // x_2 = 5;
+        // x_3 = 5;
+        // x_4 = 3;
 
-        y_1 = 19;
-        y_2 = 27;
-        y_3 = 31;
-        y_4 = 12;
-
-        hiddenObstacleLocations.push_back(Point2D(x_1,y_1));
-        hiddenObstacleLocations.push_back(Point2D(x_2,y_2));
-        hiddenObstacleLocations.push_back(Point2D(x_3,y_3));
-        hiddenObstacleLocations.push_back(Point2D(x_4,y_4));
-        AREA[x_1][y_1] = HIDDEN_OBSTACLE;
-        AREA[x_2][y_2] = HIDDEN_OBSTACLE;
-        AREA[x_3][y_3] = HIDDEN_OBSTACLE;
-        AREA[x_4][y_4] = HIDDEN_OBSTACLE;
+        // y_1 = 9;
+        // y_2 = 27;
+        // y_3 = 31;
+        // y_4 = 12;
 
 
-        // for (int i=0; i<num; i++) {
-        //     int ox = rand()%SX;
-        //     int oy = rand()%SY;
-        //     while ((ox == TX && oy == TY) || (ox == this->getRobot()->X && oy == this->getRobot()->Y)) {
-        //         ox = rand()%SX;
-        //         oy = rand()%SY;
-        //     }
-        //     AREA[ox][oy] = HIDDEN_OBSTACLE;
-        //     hiddenObstacleLocations.push_back(Point2D(ox, oy));
-        // }
+        // hiddenObstacleLocations.push_back(Point2D(x_1,y_1));
+        // hiddenObstacleLocations.push_back(Point2D(x_2,y_2));
+        // hiddenObstacleLocations.push_back(Point2D(x_3,y_3));
+        // hiddenObstacleLocations.push_back(Point2D(x_4,y_4));
+        // AREA[x_1][y_1] = HIDDEN_OBSTACLE;
+        // AREA[x_2][y_2] = HIDDEN_OBSTACLE;
+        // AREA[x_3][y_3] = HIDDEN_OBSTACLE;
+        // AREA[x_4][y_4] = HIDDEN_OBSTACLE;
+
+
+        for (int i=0; i<num; i++) {
+            int ox = rand()%SX;
+            int oy = rand()%SY;
+            while ((ox == TX && oy == TY) || (ox == this->getRobot()->X && oy == this->getRobot()->Y)) {
+                ox = rand()%SX;
+                oy = rand()%SY;
+            }
+            AREA[ox][oy] = HIDDEN_OBSTACLE;
+            hiddenObstacleLocations.push_back(Point2D(ox, oy));
+        }
     }
     /**
      * @brief clear the environment
